@@ -35,7 +35,7 @@ const ReportPage = ({ params: { reportId } }: { params: { reportId: string } }) 
   return (
     <ContainerWithPageTitle title="Report" actions={renderActions()} toRedirect="/reports">
       {loading && !report && <p>Loading...</p>}
-      {!loading && report && (
+      {report && (
         <>
           <CalculatorSection title="Property Information" className="bg-transparent">
             <Address reportId={reportId} initialValues={report.address} />

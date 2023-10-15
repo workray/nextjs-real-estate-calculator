@@ -1,4 +1,4 @@
-import { connect } from '@/dbConfig/dbConfig'
+import dbConnect from '@/dbConfig/dbConnect'
 import { getErrorResponse } from '@/lib/helpers'
 import { setToken } from '@/lib/token'
 import { LoginUserInput, LoginUserSchema } from '@/lib/validations/user.schema'
@@ -7,10 +7,9 @@ import { compare } from 'bcryptjs'
 import { NextRequest } from 'next/server'
 import { ZodError } from 'zod'
 
-connect()
-
 export async function POST(req: NextRequest) {
   try {
+    await dbConnect()
     const body = (await req.json()) as LoginUserInput
     const data = LoginUserSchema.parse(body)
 

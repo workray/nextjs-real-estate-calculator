@@ -1,11 +1,11 @@
-import { connect } from '@/dbConfig/dbConfig'
+import dbConnect from '@/dbConfig/dbConnect'
 import { NextRequest, NextResponse } from 'next/server'
 import Report from '@/models/reportModel'
 
-connect()
-
 export async function POST(req: NextRequest) {
   try {
+    await dbConnect()
+
     const { address } = await req.json()
 
     // check if report already exists

@@ -9,10 +9,10 @@ import { useEffect } from 'react'
 const getAddress = (address: TAddressValues) =>
   `${address.street}, ${address.city}, ${address.state}, ${address.postal_code}`
 
-const CalculatorPage = () => {
+const Reports = () => {
   const { ids, reports, loading, mutate } = useReports()
   useEffect(() => {
-    mutate()
+    !loading && mutate()
   }, [])
 
   const renderActions = () => (
@@ -20,12 +20,11 @@ const CalculatorPage = () => {
       <Button color="default">Add Report</Button>
     </Link>
   )
-
   return (
     <ContainerWithPageTitle title="Real Estate Reports" actions={renderActions()} toRedirect="/">
       {loading && ids.length === 0 && <p>Loading...</p>}
       {!loading && ids.length === 0 && <p>No Data</p>}
-      {!loading && ids.length > 0 && (
+      {ids.length > 0 && (
         <div className="grid grid-cols-1 divide-y">
           {ids.map((id: string, index: number) => (
             <Link key={id} href={`/reports/${id}`}>
@@ -41,4 +40,4 @@ const CalculatorPage = () => {
   )
 }
 
-export default CalculatorPage
+export default Reports

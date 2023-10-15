@@ -19,10 +19,10 @@ const ScenarioPage = ({ params }: { params: TScenarioParams }) => {
   }
   return (
     <ContainerWithPageTitle title={'Scenario'} toRedirect={`/reports/${params.reportId}`}>
-      {!loading && !scenario && <p>No Data</p>}
-      {!loading && scenario && <ScenarioName params={params} scenario={scenario} />}
+      {loading && !scenario && <p>No Data</p>}
       {scenario && (
         <>
+          <ScenarioName params={params} scenario={scenario} />
           <CalculatorTypes type={type} changeCalculator={setType} />
           {type === 'cash_buy' && (
             <CashBuyCalculator

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import PageTitle, { TPageTitleProps } from '../titles/PageTitle'
 import classNames from 'classnames'

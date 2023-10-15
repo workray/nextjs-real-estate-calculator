@@ -1,7 +1,7 @@
 'use client'
 import { Header } from '@/components'
 
-const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
+const PageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Header />
@@ -10,4 +10,4 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default ProtectedLayout
+export default PageLayout

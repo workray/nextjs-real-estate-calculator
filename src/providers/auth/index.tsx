@@ -34,7 +34,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     loadUser()
     // eslint-disable-next-line
   }, [])
-
   return (
     <AuthStateContext.Provider value={state}>
       <AuthDispatchContext.Provider value={dispatch}>{children}</AuthDispatchContext.Provider>

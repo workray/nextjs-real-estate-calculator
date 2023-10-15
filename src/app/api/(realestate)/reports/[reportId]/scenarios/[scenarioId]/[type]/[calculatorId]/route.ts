@@ -1,12 +1,10 @@
-import { connect } from '@/dbConfig/dbConfig'
+import dbConnect from '@/dbConfig/dbConnect'
 import { NextRequest, NextResponse } from 'next/server'
 import CashBuy from '@/models/cashBuyModel'
 import StandardLoanRental from '@/models/standardLoanRentalModel'
 import { getError } from '@/lib'
 import { getScenario } from '@/lib/reports'
 import { TCalculatorTypeParams } from '@/types'
-
-connect()
 
 const getCalculation = async ({ reportId, scenarioId, type }: TCalculatorTypeParams) => {
   const { scenario } = await getScenario({ reportId, scenarioId })
@@ -25,6 +23,8 @@ const getCalculation = async ({ reportId, scenarioId, type }: TCalculatorTypePar
 }
 export async function GET(req: NextRequest, { params }: { params: TCalculatorTypeParams }) {
   try {
+    await dbConnect()
+
     const { type } = params
     const calculation = await getCalculation(params)
     return NextResponse.json({
@@ -38,6 +38,8 @@ export async function GET(req: NextRequest, { params }: { params: TCalculatorTyp
 
 export async function PUT(req: NextRequest, { params }: { params: TCalculatorTypeParams }) {
   try {
+    await dbConnect()
+
     const { type } = params
     const calculation = await getCalculation(params)
     const reqBody = await req.json()

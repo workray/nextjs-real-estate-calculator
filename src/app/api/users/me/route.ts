@@ -1,11 +1,11 @@
-import { connect } from '@/dbConfig/dbConfig'
+import dbConnect from '@/dbConfig/dbConnect'
 import { getErrorResponse } from '@/lib/helpers'
 import User from '@/models/userModel'
 import { NextRequest, NextResponse } from 'next/server'
 
-connect()
-
 export async function GET(req: NextRequest) {
+  await dbConnect()
+
   const userId = req.headers.get('X-USER-ID')
 
   if (!userId) {

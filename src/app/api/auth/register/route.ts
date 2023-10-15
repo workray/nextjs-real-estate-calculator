@@ -1,4 +1,4 @@
-import { connect } from '@/dbConfig/dbConfig'
+import dbConnect from '@/dbConfig/dbConnect'
 import { getErrorResponse } from '@/lib/helpers'
 import { RegisterUserInput, RegisterUserSchema } from '@/lib/validations/user.schema'
 import User from '@/models/userModel'
@@ -6,10 +6,10 @@ import { hash } from 'bcryptjs'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
 
-connect()
-
 export async function POST(req: NextRequest) {
   try {
+    await dbConnect()
+
     const body = (await req.json()) as RegisterUserInput
     const data = RegisterUserSchema.parse(body)
 

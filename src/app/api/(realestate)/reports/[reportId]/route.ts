@@ -1,4 +1,4 @@
-import { connect } from '@/dbConfig/dbConfig'
+import dbConnect from '@/dbConfig/dbConnect'
 import { NextRequest, NextResponse } from 'next/server'
 import Scenario from '@/models/scenarioModel'
 import CashBuy from '@/models/cashBuyModel'
@@ -7,8 +7,6 @@ import mongoose from 'mongoose'
 import { TReportParams } from '@/types'
 import { getError } from '@/lib'
 import { getReport } from '@/lib/reports'
-
-connect()
 
 const getReportRelations = async (report: { scenarios: mongoose.Types.ObjectId[] }) => {
   const scenarios =
@@ -30,6 +28,8 @@ const getReportRelations = async (report: { scenarios: mongoose.Types.ObjectId[]
 }
 export async function GET(req: NextRequest, { params }: { params: TReportParams }) {
   try {
+    await dbConnect()
+
     const report = await getReport(params)
     const relations = await getReportRelations(report)
 
@@ -44,6 +44,8 @@ export async function GET(req: NextRequest, { params }: { params: TReportParams 
 
 export async function PUT(req: NextRequest, { params }: { params: TReportParams }) {
   try {
+    await dbConnect()
+
     const reqBody = await req.json()
     const report = await getReport(params)
     report.address = reqBody.address

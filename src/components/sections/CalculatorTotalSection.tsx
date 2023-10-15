@@ -1,3 +1,4 @@
+'use client'
 import classNames from 'classnames'
 import { NumericFormat } from 'react-number-format'
 

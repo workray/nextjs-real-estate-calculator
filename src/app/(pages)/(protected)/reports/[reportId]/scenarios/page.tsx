@@ -1,10 +1,13 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 const ScenariosPage = ({ params: { reportId } }: { params: { reportId: string } }) => {
   const router = useRouter()
-  router.push(`/reports/${reportId}`)
+  useEffect(() => {
+    router.push(`/reports/${reportId}`)
+  }, [])
   return <div></div>
 }
 

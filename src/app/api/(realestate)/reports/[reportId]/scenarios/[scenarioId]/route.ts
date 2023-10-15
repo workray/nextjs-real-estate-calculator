@@ -1,4 +1,4 @@
-import { connect } from '@/dbConfig/dbConfig'
+import dbConnect from '@/dbConfig/dbConnect'
 import { NextRequest, NextResponse } from 'next/server'
 import Scenario from '@/models/scenarioModel'
 import CashBuy from '@/models/cashBuyModel'
@@ -7,7 +7,7 @@ import { TScenarioParams } from '@/types'
 import { getScenario } from '@/lib/reports'
 import { getError } from '@/lib'
 
-connect()
+dbConnect()
 
 export async function GET(req: NextRequest, { params }: { params: TScenarioParams }) {
   try {

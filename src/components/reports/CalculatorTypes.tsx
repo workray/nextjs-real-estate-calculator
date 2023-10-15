@@ -1,3 +1,4 @@
+'use client'
 import { TCalculator } from '@/types'
 
 const CalculatorTypes = ({
@@ -17,7 +18,7 @@ const CalculatorTypes = ({
   )
   return (
     <div className="tabs">
-      {calculatorTab('cash_buy', 'Cash Buy')}
+      {calculatorTab('cash_buy', 'Cash Purchase')}
       {calculatorTab('standard_loan_rental', 'Standard Loan Rental')}
     </div>
   )

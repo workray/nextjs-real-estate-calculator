@@ -1,7 +1,8 @@
 'use client'
 import { Button, ContainerWithPageTitle, HouseCard, Input } from '@/components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getProperties } from '@/lib/properties'
+import { useRouter } from 'next/navigation'
 
 type TProperty = {
   property_id: string
@@ -19,6 +20,12 @@ const HomePage = () => {
   // const [sort, setSort] = useState<string | null>(null) // Stores the sort preference
   // const [beds, setBeds] = useState<string | null>(null) // Stores the minimum beds
   const [response, setResponse] = useState<TProperty[] | null>(null) // Stores the properties returned in the API response
+
+  const router = useRouter()
+  useEffect(() => {
+    router.replace('/reports')
+  }, [])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Store value in state
     setKeyword(e.target.value)
@@ -51,6 +58,7 @@ const HomePage = () => {
           <Input
             placeholder="Enter the location for properties eg: New York"
             onChange={handleChange}
+            className="mb-4"
           />
           <Button type="submit" loading={loading}>
             Search

@@ -1,3 +1,4 @@
+'use client'
 import { useMemo } from 'react'
 import { TCashBuy, TCashBuyChartData, TCashBuyTableData, TScenario } from '@/types'
 import getCashBuyCalculations from './getCashBuyCalculations'
