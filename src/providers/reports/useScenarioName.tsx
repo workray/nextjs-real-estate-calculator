@@ -1,3 +1,4 @@
+'use client'
 import { ADDED_SCENARIO, DELETED_SCENARIO, UPDATED_SCENARIO } from '@/types'
 import api from '@/lib/api'
 import { useCallback, useState, useTransition } from 'react'

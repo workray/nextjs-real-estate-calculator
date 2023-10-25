@@ -1,3 +1,4 @@
+'use client'
 import { REPORT, TReportParams } from '@/types'
 import { useReportsState } from '.'
 import useReportsData from './useReportsData'

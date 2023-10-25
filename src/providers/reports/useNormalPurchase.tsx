@@ -1,3 +1,5 @@
+'use client'
+
 import api from '@/lib/api'
 import { useCallback, useState } from 'react'
 import { useReportsDispatch } from './index'

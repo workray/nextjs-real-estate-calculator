@@ -1,3 +1,5 @@
+'use client'
+
 import { SCENARIO, TScenarioParams } from '@/types'
 import { useReportsState } from '.'
 import useReportsData from './useReportsData'

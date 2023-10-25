@@ -1,3 +1,5 @@
+'use client'
+
 import { REPORTS } from '@/types'
 import { useReportsState } from '.'
 import useReportsData from './useReportsData'

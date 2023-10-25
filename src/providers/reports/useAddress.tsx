@@ -1,3 +1,5 @@
+'use client'
+
 import { DELETED_SCENARIO, TAddressValues } from '@/types'
 import api from '@/lib/api'
 import { useCallback, useState, useTransition } from 'react'
