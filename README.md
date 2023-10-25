@@ -168,13 +168,13 @@ const calculateFinancialInvestment = ({
     (1 - cost_to_sell / 100)
 
   const appreciation = propertyValue - totalPurchaseCost
-  const rentalRateIncrease =
+  const rentalIncome =
     totalIncome *
     ((Math.pow(1 + annual_increase_monthly_rent / 100, holding_length) - 1) / holding_length)
   return {
     netIncome,
     appreciation,
-    rentalRateIncrease
+    rentalIncome
   }
 }
 ```

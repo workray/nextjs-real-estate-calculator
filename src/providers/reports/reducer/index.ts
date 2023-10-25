@@ -12,16 +12,20 @@ import {
   UPDATED_CASH_BUY,
   TReportsAction,
   TReportsState,
-  ADDED_STANDARD_LOAN_RENTAL,
-  STANDARD_LOAN_RENTAL,
-  UPDATED_STANDARD_LOAN_RENTAL,
+  ADDED_NORMAL_PURCHASE,
+  NORMAL_PURCHASE,
+  UPDATED_NORMAL_PURCHASE,
   CHANGED_CALCULATOR,
-  DELETED_REPORT
+  DELETED_REPORT,
+  ADDED_CASH_PURCHASE,
+  UPDATED_CASH_PURCHASE,
+  CASH_PURCHASE
 } from '@/types/reports'
 import { getReports, addReport, getReport, changeCalculator, deleteReport } from './reports'
 import { addScenario, removeScenario, getScenario } from './scenarios'
+import { addCashPurchase, getCashPurchase } from './cashPurchases'
+import { addNormalPurchase, getNormalPurchase } from './normalPurchases'
 import { addCashBuy, getCashBuy } from './cashBuys'
-import { addStandardLoanRental, getStandardLoanRental } from './standardLoanRentals'
 
 const reportsReducer = (state: TReportsState, action: TReportsAction): TReportsState => {
   const { type } = action
@@ -46,17 +50,23 @@ const reportsReducer = (state: TReportsState, action: TReportsAction): TReportsS
     case DELETED_SCENARIO:
       return removeScenario(state, action)
 
+    case ADDED_CASH_PURCHASE:
+      return addCashPurchase(state, action)
+    case CASH_PURCHASE:
+    case UPDATED_CASH_PURCHASE:
+      return getCashPurchase(state, action)
+
+    case ADDED_NORMAL_PURCHASE:
+      return addNormalPurchase(state, action)
+    case NORMAL_PURCHASE:
+    case UPDATED_NORMAL_PURCHASE:
+      return getNormalPurchase(state, action)
+
     case ADDED_CASH_BUY:
       return addCashBuy(state, action)
     case CASH_BUY:
     case UPDATED_CASH_BUY:
       return getCashBuy(state, action)
-
-    case ADDED_STANDARD_LOAN_RENTAL:
-      return addStandardLoanRental(state, action)
-    case STANDARD_LOAN_RENTAL:
-    case UPDATED_STANDARD_LOAN_RENTAL:
-      return getStandardLoanRental(state, action)
     default:
       throw new Error('Unknown action type')
   }

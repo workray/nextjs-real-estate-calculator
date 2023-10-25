@@ -1,34 +1,29 @@
 import React from 'react'
 import classNames from 'classnames'
-import { NumericFormatProps, NumericFormat } from 'react-number-format'
+import { NumericFormat } from 'react-number-format'
+import { TCalculatorInputProps } from '@/types'
+import { get } from 'lodash'
 
-export type TCalculatorInputProps = NumericFormatProps & {
-  id?: string
-  className?: string
-  label?: string
-  labelClassName?: string
-  inputClassName?: string
-  error?: string
-  required?: boolean
-  prefix?: string
-  suffix?: string
-}
-
-const CalculatorInput = React.forwardRef<JSX.Element, TCalculatorInputProps>((props, ref) => {
-  const {
+function ForwardedCalculatorInput(
+  {
     className,
     label,
     error,
     id,
     // required,
+    editable = true,
     labelClassName,
     inputClassName,
     prefix,
     suffix,
+    data,
+    disabled,
     ...rest
-  } = props
+  }: TCalculatorInputProps,
+  ref: React.ForwardedRef<HTMLInputElement>
+) {
   return (
-    <div className={classNames('flex flex-col w-full mb-4', className)}>
+    <div className={classNames('flex flex-col w-full', className)}>
       {label && (
         <label
           htmlFor={id}
@@ -46,8 +41,10 @@ const CalculatorInput = React.forwardRef<JSX.Element, TCalculatorInputProps>((pr
         id={id}
         getInputRef={ref}
         className={classNames(
-          'p-2 border outline-gray-300 rounded-lg focus:outline-blue-600 text-right',
+          'p-2 text-right',
+          { 'border outline-gray-300 rounded-lg focus:outline-blue-600': editable },
           { 'border-red-500 focus:border_red_600': error },
+          { 'bg-transparent': !editable },
           inputClassName
         )}
         // format={format}
@@ -56,12 +53,15 @@ const CalculatorInput = React.forwardRef<JSX.Element, TCalculatorInputProps>((pr
         decimalScale={prefix === '$' ? 2 : 0}
         fixedDecimalScale
         thousandSeparator=","
+        value={get(data, id, 0)}
+        disabled={disabled || !editable}
         {...rest}
       />
       {error && <span className="text-red-500 text-xs">{error}</span>}
     </div>
   )
-})
+}
+const CalculatorInput = React.forwardRef(ForwardedCalculatorInput)
 
 CalculatorInput.displayName = 'CalculatorInput'
 

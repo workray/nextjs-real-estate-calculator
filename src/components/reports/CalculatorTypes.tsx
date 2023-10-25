@@ -1,16 +1,23 @@
 'use client'
-import { TCalculator } from '@/types'
+import {
+  CASH_BUY,
+  CASH_PURCHASE,
+  NORMAL_PURCHASE,
+  SELLER_FINANCE_PURCHASE,
+  SUB_TO_PURCHASE,
+  TCalculatorType
+} from '@/types'
 
 const CalculatorTypes = ({
   type,
   changeCalculator
 }: {
-  type: TCalculator
-  changeCalculator: (type: TCalculator) => void
+  type: TCalculatorType
+  changeCalculator: (type: TCalculatorType) => void
 }) => {
-  const calculatorTab = (calculator: TCalculator, label: string) => (
+  const calculatorTab = (calculator: TCalculatorType, label: string) => (
     <a
-      className={`tab tab-lifted ${type === calculator ? 'tab-active' : ''}`}
+      className={`tab tab-lg tab-bordered ${type === calculator ? 'tab-active' : ''}`}
       onClick={() => changeCalculator(calculator)}
     >
       {label}
@@ -18,8 +25,11 @@ const CalculatorTypes = ({
   )
   return (
     <div className="tabs">
-      {calculatorTab('cash_buy', 'Cash Purchase')}
-      {calculatorTab('standard_loan_rental', 'Standard Loan Rental')}
+      {calculatorTab(CASH_PURCHASE, 'Cash Purchase')}
+      {calculatorTab(NORMAL_PURCHASE, 'Normal Purchase (w Mortgage)')}
+      {calculatorTab(CASH_BUY, 'Cash Buy -> Refinance')}
+      {calculatorTab(SUB_TO_PURCHASE, 'Sub To Purchase')}
+      {calculatorTab(SELLER_FINANCE_PURCHASE, 'Seller Finance Purchase')}
     </div>
   )
 }

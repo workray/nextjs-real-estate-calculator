@@ -2,31 +2,42 @@ import { TObject } from './TObject'
 
 type TCashBuy = TObject & {
   purchase_price: number
-  gross_annual_income: number
-  rental_increase: number
-  expenses_increase: number
-  tax_rate: number
-  insurance_rate: number
-  maintenance_rate: number
-  management_rate: number
-  vacancy_rate: number
-  capital_rate: number
-  appreciation_rate: number
-}
-
-export type TCashBuyCalculations = {
-  netIncome: number
-  appreciation: number
-  rentalRateIncrease: number
-}
-
-export type TCashBuyTableData = TCashBuyCalculations &
-  TCashBuy & {
-    scenarioId: string
-    no: number
-    name: string
+  closing_costs: number
+  finder_fee_cost: number
+  renovation_costs: number
+  holding_costs: {
+    utilities: number
+    insurance: number
   }
-
-export type TCashBuyChartData = TCashBuyCalculations & { name: string }
+  initial_financing: {
+    ltv_of_purchase_price: number
+    closing_costs: number
+    down_payment: number
+    interest_rate: number
+    loan_term: number
+    months_of_rehab: number
+  }
+  rental_expenses: {
+    maintenance: number
+    vacancy: number
+    property_management: number
+    capital_expenses: number
+    hoa_fees: number
+    utilities: number
+    insurance: number
+  }
+  annual_taxes: number
+  annual_property_insurance: number
+  refinancing: {
+    arv: number
+    ltv_of_arv: number
+    closing_costs: number
+    down_payment: number
+    interest_rate: number
+    loan_term: number
+  }
+  monthly_rent: number
+  other_income: number
+}
 
 export default TCashBuy

@@ -1,3 +1,5 @@
+import { ColumnDef } from '@tanstack/table-core'
+
 export * from './auth'
 export * from './reports'
 
@@ -8,11 +10,9 @@ export type TAddressValues = {
   postal_code: string
 }
 
-export type ColumnDef<T> = {
-  header: string //header Text
-  accessorKey: keyof T //key for how to get the value
-  width?: number // column width
-  isPinned?: boolean //column pinned state
+export type TColumnDef<T> = ColumnDef<T> & {
+  header: string
   prefix?: string
   suffix?: string
+  columns?: TColumnDef<T>[]
 }

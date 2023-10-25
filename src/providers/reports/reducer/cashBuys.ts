@@ -3,7 +3,7 @@ import { ADDED_CASH_BUY, CASH_BUY, UPDATED_CASH_BUY, TReportsAction, TReportsSta
 export const getCashBuy = (state: TReportsState, { type, payload }: TReportsAction) => {
   if (type === CASH_BUY || type === UPDATED_CASH_BUY) {
     const { params, data } = payload
-    if (params.type !== 'cash_buy') return state
+    if (params.type !== CASH_BUY) return state
 
     return {
       ...state,
@@ -16,7 +16,7 @@ export const getCashBuy = (state: TReportsState, { type, payload }: TReportsActi
 export const addCashBuy = (state: TReportsState, { type, payload }: TReportsAction) => {
   if (type === ADDED_CASH_BUY) {
     const { params, data } = payload
-    if (params.type !== 'cash_buy') return state
+    if (params.type !== CASH_BUY) return state
 
     const scenario = state.scenarios[params.scenarioId]
     return {

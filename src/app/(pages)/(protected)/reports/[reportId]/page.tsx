@@ -1,14 +1,16 @@
 'use client'
 import {
-  CalculatorSection,
   ContainerWithPageTitle,
   Address,
   Button,
-  CalculatorTypes
+  CalculatorTypes,
+  CashPurchaseReport,
+  CashBuyReport,
+  NormalPurchaseReport
 } from '@/components'
-import CashBuyReport from '@/components/reports/cashBuy/CashBuyReport'
-import StandardLoanRentalReport from '@/components/reports/standardLoanRental/StandardLoanRentalReport'
+import { CalculatorCard } from '@/components/reports/content'
 import useReport from '@/providers/reports/useReport'
+import { CASH_PURCHASE, NORMAL_PURCHASE, CASH_BUY } from '@/types'
 import Link from 'next/link'
 import { useEffect } from 'react'
 
@@ -17,8 +19,9 @@ const ReportPage = ({ params: { reportId } }: { params: { reportId: string } }) 
     report,
     type,
     scenarios,
+    cashPurchases,
+    normalPurchases,
     cashBuys,
-    standardLoanRentals,
     changeCalculator,
     loading,
     mutate
@@ -36,22 +39,25 @@ const ReportPage = ({ params: { reportId } }: { params: { reportId: string } }) 
     <ContainerWithPageTitle title="Report" actions={renderActions()} toRedirect="/reports">
       {loading && !report && <p>Loading...</p>}
       {report && (
-        <>
-          <CalculatorSection title="Property Information" className="bg-transparent">
+        <div className="space-y-4">
+          <CalculatorCard title="Property Information" className="bg-transparent mb-4">
             <Address reportId={reportId} initialValues={report.address} />
-          </CalculatorSection>
+          </CalculatorCard>
           <CalculatorTypes type={type} changeCalculator={changeCalculator} />
-          {type === 'cash_buy' && (
-            <CashBuyReport reportId={reportId} scenarios={scenarios} cashBuys={cashBuys} />
+          {type === CASH_PURCHASE && (
+            <CashPurchaseReport reportId={reportId} scenarios={scenarios} items={cashPurchases} />
           )}
-          {type === 'standard_loan_rental' && (
-            <StandardLoanRentalReport
+          {type === NORMAL_PURCHASE && (
+            <NormalPurchaseReport
               reportId={reportId}
               scenarios={scenarios}
-              standardLoanRentals={standardLoanRentals}
+              items={normalPurchases}
             />
           )}
-        </>
+          {type === CASH_BUY && (
+            <CashBuyReport reportId={reportId} scenarios={scenarios} items={cashBuys} />
+          )}
+        </div>
       )}
       {!loading && !report && <p>Not Found Data.</p>}
     </ContainerWithPageTitle>

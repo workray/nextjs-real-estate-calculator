@@ -2,8 +2,9 @@ import mongoose from 'mongoose'
 
 export const ScenarioSchema = new mongoose.Schema({
   name: { type: String, required: [true, 'Please provide a Scenario Name'] },
-  cash_buy: { type: mongoose.Types.ObjectId, ref: 'cashbuys' },
-  standard_loan_rental: { type: mongoose.Types.ObjectId, ref: 'standardloanrentals' }
+  cash_purchase: { type: mongoose.Types.ObjectId, ref: 'cashpurchases' },
+  normal_purchase: { type: mongoose.Types.ObjectId, ref: 'normalpurchases' },
+  cash_buy: { type: mongoose.Types.ObjectId, ref: 'cashbuys' }
 })
 
 const Scenario = mongoose.models.scenarios || mongoose.model('scenarios', ScenarioSchema)

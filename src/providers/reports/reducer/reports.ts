@@ -6,7 +6,8 @@ import {
   TReportsAction,
   TReportsState,
   CHANGED_CALCULATOR,
-  DELETED_REPORT
+  DELETED_REPORT,
+  CASH_PURCHASE
 } from '@/types'
 import { arrayToObject, isChangedObjects, removeFromArray, removeFromObject } from '@/helpers'
 
@@ -19,7 +20,7 @@ export const getReports = (state: TReportsState, { type, payload }: TReportsActi
       ...state,
       ids,
       calculators: ids.reduce(
-        (acc, id) => ({ ...acc, [id]: state.calculators[id] || 'cash_buy' }),
+        (acc, id) => ({ ...acc, [id]: state.calculators[id] || CASH_PURCHASE }),
         {}
       ),
       reports: { ...arrayToObject(data.reports) }
@@ -34,7 +35,7 @@ export const addReport = (state: TReportsState, { type, payload }: TReportsActio
     return {
       ...state,
       ids: [...state.ids, data.report._id],
-      calculators: { ...state.calculators, [data.report._id]: 'cash_buy' },
+      calculators: { ...state.calculators, [data.report._id]: CASH_PURCHASE },
       reports: { ...state.reports, [data.report._id]: data.report }
     }
   }
@@ -60,11 +61,12 @@ export const getReport = (state: TReportsState, { type, payload }: TReportsActio
       ...state,
       reports: { ...state.reports, [params.reportId]: data.report },
       scenarios: { ...state.scenarios, ...arrayToObject(data.scenarios) },
-      cash_buys: { ...state.cash_buys, ...arrayToObject(data.cash_buys) },
-      standard_loan_rentals: {
-        ...state.standard_loan_rentals,
-        ...arrayToObject(data.standard_loan_rentals)
-      }
+      cash_purchases: { ...state.cash_purchases, ...arrayToObject(data.cash_purchases) },
+      normal_purchases: {
+        ...state.normal_purchases,
+        ...arrayToObject(data.normal_purchases)
+      },
+      cash_buys: { ...state.cash_buys, ...arrayToObject(data.cash_buys) }
     }
   }
   return state

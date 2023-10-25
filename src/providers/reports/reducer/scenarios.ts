@@ -15,15 +15,18 @@ export const getScenario = (state: TReportsState, { type, payload }: TReportsAct
     return {
       ...state,
       scenarios: { ...state.scenarios, [params.scenarioId]: data.scenario },
+      cash_purchases: data.cash_purchase
+        ? { ...state.cash_purchases, [data.cash_purchase._id]: data.cash_purchase }
+        : state.cash_purchases,
+      normal_purchases: data.normal_purchase
+        ? {
+            ...state.normal_purchases,
+            [data.normal_purchase._id]: data.normal_purchase
+          }
+        : state.normal_purchases,
       cash_buys: data.cash_buy
         ? { ...state.cash_buys, [data.cash_buy._id]: data.cash_buy }
-        : state.cash_buys,
-      standard_loan_rentals: data.standard_loan_rental
-        ? {
-            ...state.standard_loan_rentals,
-            [data.standard_loan_rental._id]: data.standard_loan_rental
-          }
-        : state.standard_loan_rentals
+        : state.cash_buys
     }
   }
   return state
@@ -63,10 +66,11 @@ export const removeScenario = (state: TReportsState, { type, payload }: TReports
         }
       },
       scenarios: { ...removeFromObject(state.scenarios, params.scenarioId) },
-      cash_buys: { ...removeFromObject(state.cash_buys, scenario.cash_buy) },
-      standard_loan_rentals: {
-        ...removeFromObject(state.standard_loan_rentals, scenario.standard_loan_rental)
-      }
+      cash_purchases: { ...removeFromObject(state.cash_purchases, scenario.cash_purchase) },
+      normal_purchases: {
+        ...removeFromObject(state.normal_purchases, scenario.normal_purchase)
+      },
+      cash_buys: { ...removeFromObject(state.cash_buys, scenario.cash_buy) }
     }
   }
   return state

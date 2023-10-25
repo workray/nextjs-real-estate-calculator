@@ -9,11 +9,11 @@ const useScenarios = ({ reportId }: TReportParams & { type: string }) => {
   report.scenarios = report
     ? report.scenarios.map((scenarioId: string) => {
         const scenario = scenarios[scenarioId]
-        if (scenario && scenario.cash_buy) {
-          scenario.cash_buy = calculations[scenario.cash_buy]
+        if (scenario && scenario.cash_purchase) {
+          scenario.cash_purchase = calculations[scenario.cash_purchase]
         }
-        if (scenario && scenario.standard_loan_rental) {
-          scenario.standard_loan_rental = calculations[scenario.standard_loan_rental]
+        if (scenario && scenario.normal_purchase) {
+          scenario.normal_purchase = calculations[scenario.normal_purchase]
         }
       })
     : []

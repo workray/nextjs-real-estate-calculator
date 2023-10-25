@@ -16,7 +16,6 @@ export async function middleware(req: NextRequest) {
   } else if (req.headers.get('Authorization')?.startsWith('Bearer ')) {
     token = req.headers.get('Authorization')?.substring(7)
   }
-
   // if (req.nextUrl.pathname.startsWith('/login') && (!token || redirectToLogin)) return
 
   if (

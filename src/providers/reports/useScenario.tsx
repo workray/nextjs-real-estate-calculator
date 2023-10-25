@@ -6,19 +6,20 @@ import { useMemo } from 'react'
 
 const useScenario = (params: TScenarioParams) => {
   const { reportId, scenarioId } = params
-  const { scenarios, cash_buys, standard_loan_rentals } = useReportsState()
-  const { scenario, cashBuy, standardLoanRental } = useMemo(() => {
+  const { scenarios, cash_purchases, normal_purchases, cash_buys } = useReportsState()
+
+  const { scenario, cashPurchase, normalPurchase, cashBuy } = useMemo(() => {
     const scenario = scenarios[scenarioId]
+    const cashPurchase = scenario ? cash_purchases[scenario.cash_purchase] : undefined
+    const normalPurchase = scenario ? normal_purchases[scenario.normal_purchase] : undefined
     const cashBuy = scenario ? cash_buys[scenario.cash_buy] : undefined
-    const standardLoanRental = scenario
-      ? standard_loan_rentals[scenario.standard_loan_rental]
-      : undefined
-    return { scenario, cashBuy, standardLoanRental }
-  }, [cash_buys, scenarioId, scenarios, standard_loan_rentals])
+    return { scenario, cashPurchase, normalPurchase, cashBuy }
+  }, [cash_buys, cash_purchases, scenarioId, scenarios, normal_purchases])
   return {
     scenario,
+    cashPurchase,
+    normalPurchase,
     cashBuy,
-    standardLoanRental,
     ...useReportsData({
       action: SCENARIO,
       params,

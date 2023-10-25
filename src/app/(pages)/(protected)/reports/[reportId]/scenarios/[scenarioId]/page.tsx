@@ -1,15 +1,20 @@
 'use client'
 
-import { CalculatorTypes, ContainerWithPageTitle, ScenarioName } from '@/components'
-import CashBuyCalculator from '@/components/reports/cashBuy/CashBuyCalculator'
-import StandardLoanRentalCalculator from '@/components/reports/standardLoanRental/StandardLoanRentalCalculator'
+import {
+  CalculatorTypes,
+  CashBuyCalculator,
+  CashPurchaseCalculator,
+  ContainerWithPageTitle,
+  NormalPurchaseCalculator,
+  ScenarioName
+} from '@/components'
 import useScenario from '@/providers/reports/useScenario'
-import { TCalculator, TScenarioParams } from '@/types'
+import { CASH_BUY, CASH_PURCHASE, NORMAL_PURCHASE, TCalculatorType, TScenarioParams } from '@/types'
 import { useEffect, useState } from 'react'
 
 const ScenarioPage = ({ params }: { params: TScenarioParams }) => {
-  const { scenario, cashBuy, standardLoanRental, loading, mutate } = useScenario(params)
-  const [type, setType] = useState<TCalculator>('cash_buy')
+  const { scenario, cashPurchase, normalPurchase, cashBuy, loading, mutate } = useScenario(params)
+  const [type, setType] = useState<TCalculatorType>(CASH_PURCHASE)
   useEffect(() => {
     mutate()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -21,26 +26,37 @@ const ScenarioPage = ({ params }: { params: TScenarioParams }) => {
     <ContainerWithPageTitle title={'Scenario'} toRedirect={`/reports/${params.reportId}`}>
       {loading && !scenario && <p>No Data</p>}
       {scenario && (
-        <>
+        <div className="space-y-4">
           <ScenarioName params={params} scenario={scenario} />
           <CalculatorTypes type={type} changeCalculator={setType} />
-          {type === 'cash_buy' && (
+          {type === CASH_PURCHASE && (
+            <CashPurchaseCalculator
+              reportId={params.reportId}
+              scenarioId={params.scenarioId}
+              calculatorId={cashPurchase ? cashPurchase._id : null}
+              key={cashPurchase ? cashPurchase._id : 'cash_purchase'}
+              initialValues={cashPurchase}
+            />
+          )}
+          {type === NORMAL_PURCHASE && (
+            <NormalPurchaseCalculator
+              reportId={params.reportId}
+              scenarioId={params.scenarioId}
+              calculatorId={normalPurchase ? normalPurchase._id : null}
+              key={normalPurchase ? normalPurchase._id : 'normal_purchase'}
+              initialValues={normalPurchase}
+            />
+          )}
+          {type === CASH_BUY && (
             <CashBuyCalculator
               reportId={params.reportId}
               scenarioId={params.scenarioId}
               calculatorId={cashBuy ? cashBuy._id : null}
+              key={cashBuy ? cashBuy._id : 'cash_buy'}
               initialValues={cashBuy}
             />
           )}
-          {type === 'standard_loan_rental' && (
-            <StandardLoanRentalCalculator
-              reportId={params.reportId}
-              scenarioId={params.scenarioId}
-              calculatorId={standardLoanRental ? standardLoanRental._id : null}
-              initialValues={standardLoanRental}
-            />
-          )}
-        </>
+        </div>
       )}
     </ContainerWithPageTitle>
   )

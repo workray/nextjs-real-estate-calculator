@@ -1,8 +1,9 @@
 import dbConnect from '@/dbConfig/dbConnect'
 import { NextRequest, NextResponse } from 'next/server'
 import Scenario from '@/models/scenarioModel'
+import CashPurchase from '@/models/cashPurchaseModel'
+import NormalPurchase from '@/models/normalPurchaseModel'
 import CashBuy from '@/models/cashBuyModel'
-import StandardLoanRental from '@/models/standardLoanRentalModel'
 import { TScenarioParams } from '@/types'
 import { getScenario } from '@/lib/reports'
 import { getError } from '@/lib'
@@ -12,11 +13,17 @@ dbConnect()
 export async function GET(req: NextRequest, { params }: { params: TScenarioParams }) {
   try {
     const { scenario } = await getScenario(params)
+    const cashPurchase = await CashPurchase.findById(scenario.cash_purchase)
+    const normalPurchase = await NormalPurchase.findById(scenario.normal_purchase)
     const cashBuy = await CashBuy.findById(scenario.cash_buy)
-    const standardLoanRental = await StandardLoanRental.findById(scenario.standard_loan_rental)
     return NextResponse.json({
       success: true,
-      data: { scenario, cash_buy: cashBuy, standard_loan_rental: standardLoanRental }
+      data: {
+        scenario,
+        cash_purchase: cashPurchase,
+        normal_purchase: normalPurchase,
+        cash_buy: cashBuy
+      }
     })
   } catch (error: any) {
     return getError(error)
@@ -48,9 +55,9 @@ export async function DELETE(req: NextRequest, { params }: { params: TScenarioPa
 
     await report.save()
 
+    if (scenario.cash_purchase) await CashPurchase.deleteOne({ _id: scenario.cash_purchase })
+    if (scenario.normal_purchase) await NormalPurchase.deleteOne({ _id: scenario.normal_purchase })
     if (scenario.cash_buy) await CashBuy.deleteOne({ _id: scenario.cash_buy })
-    if (scenario.standard_loan_rental)
-      await StandardLoanRental.deleteOne({ _id: scenario.standard_loan_rental })
 
     await Scenario.deleteOne({ _id: params.scenarioId })
 

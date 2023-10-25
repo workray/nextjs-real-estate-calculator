@@ -1,7 +1,10 @@
-import TCashBuy from './TCashBuy'
+import TCashPurchase from './TCashPurchase'
 import TReport from './TReport'
 import TScenario from './TScenario'
-import TStandardLoanRental from './TStandardLoanRental'
+import TNormalPurchase from './TNormalPurchase'
+import TCashBuy from './TCashBuy'
+import { TCalculationData } from './TCalculator'
+
 import {
   REPORTS,
   REPORT,
@@ -11,46 +14,78 @@ import {
   SCENARIO,
   UPDATED_SCENARIO,
   DELETED_SCENARIO,
+  ADDED_CASH_PURCHASE,
+  CASH_PURCHASE,
+  UPDATED_CASH_PURCHASE,
   ADDED_CASH_BUY,
   CASH_BUY,
   UPDATED_CASH_BUY,
-  ADDED_STANDARD_LOAN_RENTAL,
-  STANDARD_LOAN_RENTAL,
-  UPDATED_STANDARD_LOAN_RENTAL,
+  ADDED_NORMAL_PURCHASE,
+  NORMAL_PURCHASE,
+  UPDATED_NORMAL_PURCHASE,
   CHANGED_CALCULATOR,
-  DELETED_REPORT
+  DELETED_REPORT,
+  SUB_TO_PURCHASE,
+  SELLER_FINANCE_PURCHASE
 } from './ActionTypes'
 
-export type { TReport, TScenario, TCashBuy, TStandardLoanRental }
+export type { TReport, TScenario, TCashPurchase, TNormalPurchase, TCashBuy }
 export * from './TParams'
 export * from './TObject'
 export * from './ActionTypes'
-export * from './TCashBuy'
-export * from './TStandardLoanRental'
+export * from './TCashPurchase'
+export * from './TNormalPurchase'
+export * from './TCalculator'
 
-export type TCalculator = 'cash_buy' | 'standard_loan_rental'
+export type TCalculatorType =
+  | typeof CASH_PURCHASE
+  | typeof NORMAL_PURCHASE
+  | typeof CASH_BUY
+  | typeof SUB_TO_PURCHASE
+  | typeof SELLER_FINANCE_PURCHASE
 export type TReportParams = { reportId: string }
 export type TScenarioParams = TReportParams & { scenarioId: string }
 export type TCalculatorTypeParams = TScenarioParams & { type: string }
 export type TCalculatorParams = TCalculatorTypeParams & { calculatorId: string }
 
+export type TCalculatorDataType = TCashPurchase | TNormalPurchase | TCashBuy
+export type TReportTableData<T> = T & {
+  scenarioId: string
+  no: number
+  name: string
+  grossIncome: number
+  netIncome: number
+  cocReturn: number
+  netIncomeOver30: number
+  appreciationOver30: number
+  rentalIncomeOver30: number
+}
+
+export type TReportChartData = TCalculationData & { name: string }
+
 export type TReportData = {
   report: TReport
   scenarios: TScenario[]
+  cash_purchases: TCashPurchase[]
+  normal_purchases: TNormalPurchase[]
   cash_buys: TCashBuy[]
-  standard_loan_rentals: TStandardLoanRental[]
+}
+
+export type TCashPurchaseData = {
+  cash_purchase: TCashPurchase
+}
+
+export type TNormalPurchaseData = {
+  normal_purchase: TNormalPurchase
 }
 
 export type TCashBuyData = {
   cash_buy: TCashBuy
 }
 
-export type TStandardLoanRentalData = {
-  standard_loan_rental: TStandardLoanRental
-}
-
-export type TScenarioData = TCashBuyData &
-  TStandardLoanRentalData & {
+export type TScenarioData = TCashPurchaseData &
+  TNormalPurchaseData &
+  TCashBuyData & {
     scenario: TScenario
   }
 
@@ -75,7 +110,10 @@ export type TReportsAction =
     }
   | {
       type: typeof CHANGED_CALCULATOR
-      payload: { params: TReportParams; data: { type: 'cash_buy' | 'standard_loan_rental' } }
+      payload: {
+        params: TReportParams
+        data: { type: TCalculatorType }
+      }
     }
   | {
       type: typeof ADDED_SCENARIO
@@ -92,6 +130,48 @@ export type TReportsAction =
   | {
       type: typeof DELETED_SCENARIO
       payload: { params: TScenarioParams }
+    }
+  | {
+      type: typeof ADDED_CASH_PURCHASE
+      payload: {
+        params: TCalculatorTypeParams
+        data: TCashPurchaseData
+      }
+    }
+  | {
+      type: typeof CASH_PURCHASE
+      payload: {
+        params: TCalculatorParams
+        data: TCashPurchaseData
+      }
+    }
+  | {
+      type: typeof UPDATED_CASH_PURCHASE
+      payload: {
+        params: TCalculatorParams
+        data: TCashPurchaseData
+      }
+    }
+  | {
+      type: typeof ADDED_NORMAL_PURCHASE
+      payload: {
+        params: TCalculatorTypeParams
+        data: TNormalPurchaseData
+      }
+    }
+  | {
+      type: typeof NORMAL_PURCHASE
+      payload: {
+        params: TCalculatorParams
+        data: TNormalPurchaseData
+      }
+    }
+  | {
+      type: typeof UPDATED_NORMAL_PURCHASE
+      payload: {
+        params: TCalculatorParams
+        data: TNormalPurchaseData
+      }
     }
   | {
       type: typeof ADDED_CASH_BUY
@@ -114,26 +194,4 @@ export type TReportsAction =
         data: TCashBuyData
       }
     }
-  | {
-      type: typeof ADDED_STANDARD_LOAN_RENTAL
-      payload: {
-        params: TCalculatorTypeParams
-        data: TStandardLoanRentalData
-      }
-    }
-  | {
-      type: typeof STANDARD_LOAN_RENTAL
-      payload: {
-        params: TCalculatorParams
-        data: TStandardLoanRentalData
-      }
-    }
-  | {
-      type: typeof UPDATED_STANDARD_LOAN_RENTAL
-      payload: {
-        params: TCalculatorParams
-        data: TStandardLoanRentalData
-      }
-    }
-
 export type TReportsDispatch = React.Dispatch<TReportsAction>

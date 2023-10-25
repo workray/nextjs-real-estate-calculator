@@ -11,12 +11,12 @@ import {
   UPDATED_CASH_BUY
 } from '@/types'
 
-const useCashBuy = (params: TCalculatorTypeParams | TCalculatorParams) => {
+const useCashPurchase = (params: TCalculatorTypeParams | TCalculatorParams) => {
   const { reportId, scenarioId, type } = params
   const dispatch = useReportsDispatch()
 
   const [saving, setSaving] = useState(false)
-  const saveCashBuy = useCallback(
+  const saveData = useCallback(
     async (values: TCashBuy) => {
       if (saving) return
       try {
@@ -54,7 +54,7 @@ const useCashBuy = (params: TCalculatorTypeParams | TCalculatorParams) => {
   )
 
   // const [deleting, setDeleting] = useState(false)
-  // const deleteCashBuy = useCallback(
+  // const deleteCashPurchase = useCallback(
   //   async (e: React.MouseEvent<HTMLButtonElement>) => {
   //     e.preventDefault()
   //     if (!scenarioId) return
@@ -78,8 +78,8 @@ const useCashBuy = (params: TCalculatorTypeParams | TCalculatorParams) => {
   return {
     saving,
     // deleting,
-    saveCashBuy
-    // deleteCashBuy
+    saveData
+    // deleteCashPurchase
   }
 }
-export default useCashBuy
+export default useCashPurchase

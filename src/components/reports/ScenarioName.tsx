@@ -24,7 +24,7 @@ const ScenarioName = ({
   }
 
   return (
-    <form className="w-full flex-col space-y-4 m-auto mt-10 mb-10" onSubmit={handleSubmit}>
+    <form className="w-full flex-col space-y-4 m-auto" onSubmit={handleSubmit}>
       <div className="flex space-x-4 items-end mx-2">
         <Input
           label="Scenario Name"
