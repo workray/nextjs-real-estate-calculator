@@ -13,7 +13,10 @@ const CalculatorCard = ({
     <div>
       <h1 className="mx-4 mb-1 font-bold whitespace-pre-wrap">{title}</h1>
       <div
-        className={classNames('p-4 border rounded bg-gray-50 drop-shadow-sm space-y-4', className)}
+        className={classNames(
+          'p-4 border rounded bg-gray-50 dark:bg-gray-950 drop-shadow-sm space-y-4',
+          className
+        )}
       >
         {children}
       </div>

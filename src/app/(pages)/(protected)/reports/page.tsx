@@ -28,7 +28,7 @@ const Reports = () => {
         <div className="grid grid-cols-1 divide-y">
           {ids.map((id: string, index: number) => (
             <Link key={id} href={`/reports/${id}`}>
-              <div className="flex w-full bg-slate-50 px-6 py-2 space-x-6 justify-between">
+              <div className="flex w-full bg-slate-50 dark:bg-slate-950 px-6 py-2 space-x-6 justify-between">
                 <p>{`${index + 1}. ${getAddress(reports[id].address)}`}</p>
                 <p>{reports[id].created}</p>
               </div>
