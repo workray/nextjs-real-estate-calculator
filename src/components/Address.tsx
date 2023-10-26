@@ -46,7 +46,7 @@ const Address = ({ reportId, initialValues }: TAddressProps) => {
     <Input
       id={id}
       key={id}
-      className="w-full flex-grow mb-0"
+      className=""
       {...register(id, { required: true })}
       type="text"
       error={errors[id]?.message}
@@ -57,16 +57,20 @@ const Address = ({ reportId, initialValues }: TAddressProps) => {
   )
 
   return (
-    <form
-      className="flex space-x-4 justify-center items-center mb-4"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <h3 className="whitespace-nowrap">Property Address</h3>
-      {keysOfFormValues.map(key => renderInput(key))}
-      <Button type="submit" loading={saving}>
-        Save
-      </Button>
-    </form>
+    <div>
+      <h3 className="whitespace-nowrap ml-2">Property Address</h3>
+      <form
+        className="inline-flex w-full space-x-4 items-center overflow-hidden"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="flex flex-grow space-x-4 items-center overflow-auto">
+          {keysOfFormValues.map(key => renderInput(key))}
+        </div>
+        <Button type="submit" loading={saving} className="w-24">
+          Save
+        </Button>
+      </form>
+    </div>
   )
 }
 
